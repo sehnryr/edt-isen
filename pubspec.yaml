@@ -28,19 +28,33 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  requests: ^3.3.0
+  cloud_firestore: ^0.14.4 # for Timestamp conversion
+  modal_progress_hud: ^0.1.3 # login verification
+
   shared_preferences: ^0.5.1+2
 
+  flutter_week_view: ^1.0.0+1
   flutter_calendar_week:
     git:
-      url: https://github.com/mduccc/flutter_calendar_week
-      ref: 0.1.0
+      url: https://github.com/mduccc/flutter_calendar_week.git
+      ref: 1.0.0
 
+  intl: ^0.16.1
+
+  table_calendar: ^2.3.1
   syncfusion_flutter_calendar: ^18.3.52
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: "^0.8.1"
+
+flutter_icons:
+  image_path: "assets/images/aurion1.png"
+  android: true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
