@@ -20,10 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _saving = false;
   bool _isLoggedIn = false;
   String error = '';
+  String name = '';
   List<dynamic> schedule = [];
 
   @override
   void initState() {
+    _isLoggedIn = false;
     super.initState();
     usernameController = TextEditingController();
     passwordController = TextEditingController();
@@ -40,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (password != null) {
       setState(() {
-        _isLoggedIn = true;
         _loginUser(username, password);
       });
       return;
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .group(1);
   }
 
-  void _updateSchedule() async {
+  Future<void> _updateSchedule() async {
     Response r = await Requests.get('https://web.isen-ouest.fr/webAurion/');
 
     String viewState = fetchViewState(r.content());
@@ -74,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Timestamp.fromDate(DateTime.now().subtract(Duration(days: 10)))
             .millisecondsSinceEpoch;
     int timeStampEnd =
-        Timestamp.fromDate(DateTime.now().add(Duration(days: 10)))
+        Timestamp.fromDate(DateTime.now().add(Duration(days: 30)))
             .millisecondsSinceEpoch;
     Map<String, String> params = {
       "javax.faces.partial.ajax": "true",
@@ -99,10 +100,19 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       schedule = json.decode(edt);
     });
+    return;
   }
 
   bool _creditentialVerification(Response response) {
     return RegExp(r'Planning').hasMatch(response.content());
+  }
+
+  void _updateName(Response response) {
+    setState(() {
+      name = RegExp(r'role="menu".*?<h3>(.*?)<\/h3>')
+          .firstMatch(response.content())
+          .group(1);
+    });
   }
 
   void _loginUser(String username, String password) async {
@@ -154,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     } else {
+      _updateName(r);
       prefs.setString('username', username);
       prefs.setString('password', password);
     }
@@ -324,7 +335,13 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildScheduleScreen() {
     return Scaffold(
       appBar: AppBar(),
-      body: ScheduleScreen(schedule: schedule),
+      // body: ScheduleScreen(schedule: schedule),
+      body: RefreshIndicator(
+        backgroundColor: gray,
+        color: amber,
+        child: ScheduleScreen(schedule: schedule),
+        onRefresh: _updateSchedule,
+      ),
       endDrawer: Drawer(
         child: Container(
           color: gray,
@@ -334,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.all(15),
                 color: semiGray,
                 child: Text(
-                  'Lorem Ipsum',
+                  name,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

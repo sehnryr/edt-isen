@@ -45,6 +45,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildViewWeek() {
     return CalendarWeek(
+      height: 105,
       controller: _viewWeekController,
       backgroundColor: semiGray,
       showMonth: true,
@@ -235,7 +236,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         child: Column(
           children: [
             _buildViewWeek(),
-            Flexible(child: _buildViewDay(_selectedDateTime))
+            Flexible(child: _buildViewDay(_selectedDateTime)),
           ],
         ),
       ),
