@@ -32,3 +32,4 @@ Aucune donnée ne sera envoyée autre part que sur le site de [**l'ISEN**](https
 ## TODO
 
 - [ ] Swipe inter-jours
+- [ ] Planning des groupes
