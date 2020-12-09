@@ -35,12 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
       _saving = true;
     });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String username = prefs.getString('username');
     final String password = prefs.getString('password');
 
     if (password != null) {
       setState(() {
         _isLoggedIn = true;
-        _updateSchedule();
+        _loginUser(username, password);
       });
       return;
     }
@@ -104,9 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return RegExp(r'Planning').hasMatch(response.content());
   }
 
-  void _loginUser() async {
-    if (usernameController.text.toString().length < 6 ||
-        passwordController.text.toString().length < 6) {
+  void _loginUser(String username, String password) async {
+    if (username.toString().length < 6 || password.toString().length < 6) {
       setState(() {
         error = 'Veuillez indiquer un identifiant et un mot de passe valide !';
       });
@@ -137,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await Requests.post(
         url,
         body: {
-          'username': usernameController.text,
-          'password': passwordController.text,
+          'username': username,
+          'password': password,
         },
       );
       Map<String, String> connexionToken =
@@ -154,8 +154,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     } else {
-      prefs.setString('username', usernameController.text);
-      prefs.setString('password', passwordController.text);
+      prefs.setString('username', username);
+      prefs.setString('password', password);
     }
 
     _updateSchedule();
@@ -263,7 +263,8 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: _loginUser,
+        onPressed: () =>
+            _loginUser(usernameController.text, passwordController.text),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
