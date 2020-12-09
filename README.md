@@ -1,14 +1,10 @@
 # EDT Apprenant
 
-<!-- <table style="border:none; margin:0; padding:0; background:none;"><tr>
+<table style="border:none; margin:0; padding:0; background:none;"><tr>
 <td> <img src="https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview1.png" alt="Preview1" style="width: 250px;"/> </td>
 <td> <img src="https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview2.png" alt="Preview2" style="width: 250px;"/> </td>
 <td> <img src="https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview3.png" alt="Preview3" style="width: 250px;"/> </td>
-</tr></table> -->
-
-|                                                                                                  |                                                                                                  |                                                                                                  |
-| :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| ![preview](https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview1.png) | ![preview](https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview2.png) | ![preview](https://raw.githubusercontent.com/Sehnryr/edt-isen/master/assets/images/preview3.png) |
+</tr></table>
 
 ---
 
