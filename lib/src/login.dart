@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showPassword = false;
   bool _saving = false;
   bool _isLoggedIn = false;
+  bool _easterEgg1 = false;
   String error = '';
   String name = '';
   List<dynamic> schedule = [];
@@ -312,9 +313,19 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "IÇEN EDT",
-                style: Theme.of(context).textTheme.headline1,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("I", style: Theme.of(context).textTheme.headline1),
+                  GestureDetector(
+                    onTap: () => setState(() => _easterEgg1 = !_easterEgg1),
+                    child: Text(
+                      !_easterEgg1 ? 'S' : 'Ç',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  Text("EN EDT", style: Theme.of(context).textTheme.headline1),
+                ],
               ),
               SizedBox(height: 10.0),
               Center(
