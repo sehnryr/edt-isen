@@ -197,8 +197,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       maximumTime: HourMinute(hour: 20),
       style: DayViewStyle(
         headerSize: 0,
-        backgroundColor:
-            (date.day == DateTime.now().day) ? amber.withOpacity(0.1) : gray,
+        backgroundColor: (now == reducedDate) ? amber.withOpacity(0.1) : gray,
         backgroundRulesColor: white,
         currentTimeRuleColor: amber,
         currentTimeCircleColor: amber,
