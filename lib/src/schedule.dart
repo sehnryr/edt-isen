@@ -16,17 +16,19 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   CalendarWeekController _viewWeekController;
   int _selectedIndex = 0;
-  final DateTime now = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
+  DateTime date = DateTime.now();
+  DateTime now;
   DateTime _selectedDateTime = DateTime.now();
 
   @override
   initState() {
     _viewWeekController = CalendarWeekController();
     super.initState();
+    now = DateTime(
+      date.year,
+      date.month,
+      date.day,
+    );
   }
 
   Future<Null> suicide() async {
@@ -49,8 +51,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       controller: _viewWeekController,
       backgroundColor: semiGray,
       showMonth: true,
-      minDate: DateTime.now().subtract(Duration(days: 365)),
-      maxDate: DateTime.now().add(Duration(days: 365)),
+      minDate: date.subtract(Duration(days: 364 + date.weekday)),
+      maxDate: date.add(Duration(days: 365)),
       dayOfWeek: <String>[
         'lun.',
         'mar.',
@@ -195,8 +197,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       maximumTime: HourMinute(hour: 20),
       style: DayViewStyle(
         headerSize: 0,
-        backgroundColor:
-            (date.day == DateTime.now().day) ? amber.withOpacity(0.1) : gray,
+        backgroundColor: (now == reducedDate) ? amber.withOpacity(0.1) : gray,
         backgroundRulesColor: white,
         currentTimeRuleColor: amber,
         currentTimeCircleColor: amber,

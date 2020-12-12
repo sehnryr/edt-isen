@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showPassword = false;
   bool _saving = false;
   bool _isLoggedIn = false;
+  bool _easterEgg1 = false;
   String error = '';
   String name = '';
   List<dynamic> schedule = [];
@@ -67,10 +68,18 @@ class _LoginScreenState extends State<LoginScreen> {
         .group(1);
   }
 
+  String fetchDefaultParam(String html) {
+    return RegExp(
+            r'id="([^"]*)"\s*?(?=class="schedule")|(?<=class="schedule")\s*?id="([^"]*)"')
+        .firstMatch(html)
+        .group(1);
+  }
+
   Future<void> _updateSchedule() async {
     Response r = await Requests.get('https://web.isen-ouest.fr/webAurion/');
 
     String viewState = fetchViewState(r.content());
+    String defaultParam = fetchDefaultParam(r.content());
     int timeStampStart =
         Timestamp.fromDate(DateTime.now().subtract(Duration(days: 10)))
             .millisecondsSinceEpoch;
@@ -79,12 +88,12 @@ class _LoginScreenState extends State<LoginScreen> {
             .millisecondsSinceEpoch;
     Map<String, String> params = {
       "javax.faces.partial.ajax": "true",
-      "javax.faces.source": "form:j_idt812:j_idt815",
-      "javax.faces.partial.execute": "form:j_idt812:j_idt815",
-      "javax.faces.partial.render": "form:j_idt812:j_idt815",
-      "form:j_idt812:j_idt815": "form:j_idt812:j_idt815",
-      "form:j_idt812:j_idt815_start": timeStampStart.toString(),
-      "form:j_idt812:j_idt815_end": timeStampEnd.toString(),
+      "javax.faces.source": defaultParam,
+      "javax.faces.partial.execute": defaultParam,
+      "javax.faces.partial.render": defaultParam,
+      defaultParam: defaultParam,
+      "${defaultParam}_start": timeStampStart.toString(),
+      "${defaultParam}_end": timeStampEnd.toString(),
       "form": "form",
       'javax.faces.ViewState': viewState,
     };
@@ -304,9 +313,19 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "IÇEN EDT",
-                style: Theme.of(context).textTheme.headline1,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("I", style: Theme.of(context).textTheme.headline1),
+                  GestureDetector(
+                    onTap: () => setState(() => _easterEgg1 = !_easterEgg1),
+                    child: Text(
+                      !_easterEgg1 ? 'S' : 'Ç',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  Text("EN EDT", style: Theme.of(context).textTheme.headline1),
+                ],
               ),
               SizedBox(height: 10.0),
               Center(

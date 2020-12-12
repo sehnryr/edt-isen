@@ -33,3 +33,5 @@ Aucune donnée ne sera envoyée autre part que sur le site de [**l'ISEN**](https
 
 - [ ] Swipe inter-jours
 - [ ] Planning des groupes
+- [ ] Notification des cours
+- [ ] Options pour parametrer l'apparence de l'application (premier jour de la semaine...)
