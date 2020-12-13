@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import 'common.dart';
 
@@ -14,21 +15,47 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-  CalendarWeekController _viewWeekController;
+  CalendarWeekController _viewWeek;
+  DayViewController _viewDay;
+  LinkedScrollControllerGroup _viewDayScrollControllers;
+  ScrollController _viewDayScroll;
+  ScrollController _viewHourColumnScroll;
+  PageController _viewDayHorizontalScroll;
+  final _lowRangeDate =
+      today.subtract(Duration(days: weeksBehind * 7 + today.weekday));
+  bool _isAnimated = false;
   int _selectedIndex = 0;
-  DateTime date = DateTime.now();
+  double _hourColumnWidth = 60;
+  double _hourRowHeight = 60;
+  int _minimumHour = 8;
+  int _maximumHour = 20;
   DateTime now;
-  DateTime _selectedDateTime = DateTime.now();
 
   @override
   initState() {
-    _viewWeekController = CalendarWeekController();
     super.initState();
     now = DateTime(
-      date.year,
-      date.month,
-      date.day,
+      today.year,
+      today.month,
+      today.day,
     );
+    _viewWeek = CalendarWeekController();
+    _viewDay = DayViewController();
+    _viewDayScrollControllers = LinkedScrollControllerGroup();
+    _viewDayScroll = _viewDayScrollControllers.addAndGet();
+    _viewHourColumnScroll = _viewDayScrollControllers.addAndGet();
+    _viewDayHorizontalScroll = PageController(
+      initialPage: weeksBehind * 7 + today.weekday,
+    );
+  }
+
+  @override
+  void dispose() {
+    // _viewWeek.dispose();
+    _viewDay.dispose();
+    _viewDayScroll.dispose();
+    _viewHourColumnScroll.dispose();
+    super.dispose();
   }
 
   Future<Null> suicide() async {
@@ -48,11 +75,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Widget _buildViewWeek() {
     return CalendarWeek(
       height: 105,
-      controller: _viewWeekController,
+      controller: _viewWeek,
       backgroundColor: semiGray,
       showMonth: true,
-      minDate: date.subtract(Duration(days: 364 + date.weekday)),
-      maxDate: date.add(Duration(days: 365)),
+      minDate: today.subtract(Duration(days: weeksBehind * 7 + today.weekday)),
+      maxDate: today.add(Duration(days: weeksAhead * 7 - today.weekday - 1)),
       dayOfWeek: <String>[
         'lun.',
         'mar.',
@@ -86,13 +113,25 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         color: darkGray,
         fontWeight: FontWeight.bold,
       ),
-      onDatePressed: (date) => setState(() {
-        _selectedDateTime = date;
-      }),
+      onDatePressed: (date) async {
+        setState(() {
+          _isAnimated = true;
+          _viewDayHorizontalScroll.animateToPage(
+              date.difference(_lowRangeDate).inDays,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.decelerate);
+        });
+        await Future.delayed(Duration(milliseconds: 300));
+        setState(() {
+          if (_isAnimated) {
+            _isAnimated = false;
+          }
+        });
+      },
     );
   }
 
-  Widget _buildViewDay(DateTime date) {
+  List<FlutterWeekViewEvent> _getDayEvents(DateTime date) {
     DateTime reducedDate = DateTime(date.year, date.month, date.day);
     List<FlutterWeekViewEvent> events = [];
     for (Map<String, dynamic> event in widget.schedule) {
@@ -189,25 +228,59 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         );
       }
     }
+    return events;
+  }
 
-    return DayView(
-      date: date,
-      userZoomable: false,
-      minimumTime: HourMinute(hour: 8),
-      maximumTime: HourMinute(hour: 20),
-      style: DayViewStyle(
-        headerSize: 0,
-        backgroundColor: (now == reducedDate) ? amber.withOpacity(0.1) : gray,
-        backgroundRulesColor: white,
-        currentTimeRuleColor: amber,
-        currentTimeCircleColor: amber,
-        currentTimeRuleHeight: 3.0,
+  Widget _buildViewDay(DateTime date) {
+    DateTime reducedDate = DateTime(date.year, date.month, date.day);
+    List<FlutterWeekViewEvent> events = _getDayEvents(date);
+
+    return Container(
+      width: MediaQuery.of(context).size.width - _hourColumnWidth,
+      // height: _hourRowHeight * (_maximumHour - _minimumHour),
+      child: DayView(
+        controller: _viewDay,
+        date: date,
+        userZoomable: false,
+        minimumTime: HourMinute(hour: _minimumHour),
+        maximumTime: HourMinute(hour: _maximumHour),
+        style: DayViewStyle(
+          headerSize: 0,
+          backgroundColor: (now == reducedDate) ? amber.withOpacity(0.1) : gray,
+          backgroundRulesColor: white,
+          currentTimeRuleColor: amber,
+          currentTimeCircleColor: amber,
+          currentTimeRuleHeight: 3.0,
+          hourRowHeight: _hourRowHeight,
+        ),
+        hoursColumnStyle: HoursColumnStyle(
+          width: 0,
+        ),
+        events: events,
       ),
-      hoursColumnStyle: HoursColumnStyle(
-        textStyle: TextStyle(color: white),
-        color: semiGray,
+    );
+  }
+
+  Widget _buildViewDayHourColumn(DateTime date) {
+    double width = 60;
+    return Container(
+      width: width,
+      child: DayView(
+        controller: _viewDay,
+        date: date,
+        userZoomable: false,
+        minimumTime: HourMinute(hour: 8),
+        maximumTime: HourMinute(hour: 20),
+        hoursColumnStyle: HoursColumnStyle(
+          textStyle: TextStyle(color: white),
+          color: semiGray,
+          width: width, // default
+        ),
+        style: DayViewStyle(
+          headerSize: 0,
+        ),
+        events: [],
       ),
-      events: events,
     );
   }
 
@@ -233,11 +306,50 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ],
       ),
       body: Container(
-        constraints: BoxConstraints.expand(),
+        // constraints: BoxConstraints.expand(),
         child: Column(
-          children: [
+          children: <Widget>[
             _buildViewWeek(),
-            Flexible(child: _buildViewDay(_selectedDateTime)),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  SingleChildScrollView(
+                    controller: _viewHourColumnScroll,
+                    child: Container(
+                      // height: _hourRowHeight * (_maximumHour - _minimumHour),
+                      child: _buildViewDayHourColumn(today),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    controller: _viewDayScroll,
+                    child: Container(
+                      width:
+                          MediaQuery.of(context).size.width - _hourColumnWidth,
+                      height: _hourRowHeight * (_maximumHour - _minimumHour),
+                      child: PageView(
+                        controller: _viewDayHorizontalScroll,
+                        children: List<Widget>.generate(
+                          (weeksBehind + weeksAhead) * 7,
+                          (index) => _buildViewDay(today.add(Duration(
+                              days:
+                                  index - (weeksBehind * 7 + today.weekday)))),
+                        ),
+                        onPageChanged: (value) {
+                          if (!_isAnimated) {
+                            setState(() {
+                              var t = today.add(Duration(
+                                  days: value -
+                                      (weeksBehind * 7 + today.weekday)));
+                              _viewWeek.jumpToDate(t);
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

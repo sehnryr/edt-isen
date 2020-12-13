@@ -8,6 +8,10 @@ final Color amber = Color(0xFFFF9810);
 final Color semiAmber = Color(0xFF755532);
 final Color semiRed = Color(0xFF844040);
 
+final int weeksBehind = 3;
+final int weeksAhead = 5;
+final DateTime today = DateTime.now();
+
 final List<Map<String, dynamic>> aurionTree = [
   {
     'name': 'Plannings des salles',

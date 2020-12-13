@@ -80,12 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     String viewState = fetchViewState(r.content());
     String defaultParam = fetchDefaultParam(r.content());
-    int timeStampStart =
-        Timestamp.fromDate(DateTime.now().subtract(Duration(days: 10)))
-            .millisecondsSinceEpoch;
-    int timeStampEnd =
-        Timestamp.fromDate(DateTime.now().add(Duration(days: 30)))
-            .millisecondsSinceEpoch;
+    int timeStampStart = Timestamp.fromDate(DateTime.now()
+            .subtract(Duration(days: weeksBehind * 7 + today.weekday)))
+        .millisecondsSinceEpoch;
+    int timeStampEnd = Timestamp.fromDate(DateTime.now()
+            .add(Duration(days: weeksAhead * 7 - today.weekday - 1)))
+        .millisecondsSinceEpoch;
     Map<String, String> params = {
       "javax.faces.partial.ajax": "true",
       "javax.faces.source": defaultParam,

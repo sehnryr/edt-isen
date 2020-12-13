@@ -34,6 +34,8 @@ dependencies:
 
   shared_preferences: ^0.5.1+2
 
+  linked_scroll_controller: ^0.1.2 # for synced scroll
+
   flutter_week_view: ^1.0.0+1
   flutter_calendar_week:
     git:
