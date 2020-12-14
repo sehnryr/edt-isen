@@ -8,7 +8,7 @@
 
 ---
 
-[![Paypal Donate](https://shields.io/badge/donate-Paypal.me-blue)](paypal.me/ynmls)
+[![Paypal Donate](https://shields.io/badge/donate-Paypal.me-blue)](https://paypal.me/ynmls)
 [![Buy Me a Coffee](https://shields.io/badge/donate-Buy%20Me%20A%20Coffee-yellow)](https://www.buymeacoffee.com/Sehnryr)
 
 - [Introduction](https://github.com/Sehnryr/edt-isen#introduction)
