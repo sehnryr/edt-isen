@@ -153,7 +153,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             .split(':')
             .map((val) => int.parse(val))
             .toList();
-        String title = RegExp(r'^[^-]*-[^-]*-[^-]*-[^-]*- ([^-]*) ')
+        String title = RegExp(r'^(?:.*?(?: - )){4}(.+?) - ')
             .firstMatch(event['title'])
             .group(1);
         String description =
