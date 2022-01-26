@@ -169,7 +169,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 .toList()
                 .join('\n');
         bool isExam = event.containsKey('className') &&
-            event['className'] == 'est-epreuve';
+                event['className'] == 'est-epreuve' ||
+            RegExp(r'^(?:.*?(?: - )){2}(.+?) - ')
+                    .firstMatch(event['title'])
+                    .group(1) ==
+                "DEVOIRS SURVEILLES";
         events.add(
           FlutterWeekViewEvent(
             title: title,
