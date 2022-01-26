@@ -204,7 +204,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            autofillHints: [AutofillHints.username],
             cursorColor: white,
             controller: this.usernameController,
             keyboardType: TextInputType.text,
@@ -245,7 +246,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            autofillHints: [AutofillHints.password],
+            // onEditingComplete: () => TextInput.finishAutofillContext(),
             cursorColor: white,
             controller: this.passwordController,
             obscureText: !this._showPassword,
@@ -304,46 +307,55 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildScreen() {
+  Widget _buildLoginScreen() {
     return ModalProgressHUD(
-      child: Center(
-        child: Container(
-          color: gray,
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("I", style: Theme.of(context).textTheme.headline1),
-                  GestureDetector(
-                    onTap: () => setState(() => _easterEgg1 = !_easterEgg1),
-                    child: Text(
-                      !_easterEgg1 ? 'S' : 'Ç',
-                      style: Theme.of(context).textTheme.headline1,
+      child: Form(
+        child: Center(
+          child: Container(
+            color: gray,
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("I", style: Theme.of(context).textTheme.headline1),
+                    GestureDetector(
+                      onTap: () => setState(() => _easterEgg1 = !_easterEgg1),
+                      child: Text(
+                        !_easterEgg1 ? 'S' : 'Ç',
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ),
+                    Text("EN EDT",
+                        style: Theme.of(context).textTheme.headline1),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Center(
+                  child: Text(
+                    error,
+                    style: TextStyle(
+                      color: Colors.red.withOpacity(0.7),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("EN EDT", style: Theme.of(context).textTheme.headline1),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Center(
-                child: Text(
-                  error,
-                  style: TextStyle(
-                    color: Colors.red.withOpacity(0.7),
-                    fontWeight: FontWeight.bold,
+                ),
+                SizedBox(height: 10.0),
+                AutofillGroup(
+                  child: Column(
+                    children: [
+                      _buildUsername(),
+                      SizedBox(height: 30.0),
+                      _buildPassword()
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(height: 10.0),
-              _buildUsername(),
-              SizedBox(height: 30.0),
-              _buildPassword(),
-              SizedBox(height: 30.0),
-              _buildLoginBtn(),
-            ],
+                SizedBox(height: 30.0),
+                _buildLoginBtn(),
+              ],
+            ),
           ),
         ),
       ),
@@ -406,7 +418,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: _isLoggedIn ? _buildScheduleScreen() : _buildScreen(),
+      body: _isLoggedIn ? _buildScheduleScreen() : _buildLoginScreen(),
     );
   }
 }
