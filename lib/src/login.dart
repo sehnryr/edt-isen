@@ -84,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       SecureStorage.deletePassword();
       SecureStorage.deleteSchedule();
       SecureStorage.deleteName();
+      _hasSchedule = false;
       _isLoggedIn = false;
       passwordController.text = '';
       _saving = false;
