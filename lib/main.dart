@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
         FocusScopeNode currentFocus = FocusScope.of(context);
 
         if (!currentFocus.hasPrimaryFocus) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: MaterialApp(
@@ -48,8 +48,6 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-        // home: HomeScreen(),
-        // home: MyHomePage(),
         home: LoginScreen(),
       ),
     );

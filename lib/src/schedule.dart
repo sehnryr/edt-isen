@@ -8,19 +8,19 @@ import 'common.dart';
 class ScheduleScreen extends StatefulWidget {
   final List<dynamic> schedule;
 
-  ScheduleScreen({Key key, @required this.schedule}) : super(key: key);
+  ScheduleScreen({Key? key, required this.schedule}) : super(key: key);
 
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-  CalendarWeekController _viewWeek;
-  DayViewController _viewDay;
-  LinkedScrollControllerGroup _viewDayScrollControllers;
-  ScrollController _viewDayScroll;
-  ScrollController _viewHourColumnScroll;
-  PageController _viewDayHorizontalScroll;
+  late CalendarWeekController _viewWeek;
+  late DayViewController _viewDay;
+  late LinkedScrollControllerGroup _viewDayScrollControllers;
+  late ScrollController _viewDayScroll;
+  late ScrollController _viewHourColumnScroll;
+  late PageController _viewDayHorizontalScroll;
   final _lowRangeDate =
       today.subtract(Duration(days: weeksBehind * 7 + today.weekday));
   bool _isAnimated = false;
@@ -29,7 +29,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   double _hourRowHeight = 60;
   int _minimumHour = 8;
   int _maximumHour = 20;
-  DateTime now;
+  late DateTime now;
 
   @override
   initState() {
@@ -154,11 +154,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             .map((val) => int.parse(val))
             .toList();
         String title = RegExp(r'^(?:.*?(?: - )){3}(.+?) - ')
-            .firstMatch(event['title'])
-            .group(1);
+            .firstMatch(event['title'])!
+            .group(1)!;
         String description =
             RegExp(r'((?<= - )(?:(?! - ).)*?) - ((?<= - )(?:(?! - ).)*?)$')
-                .firstMatch(event['title'])
+                .firstMatch(event['title'])!
                 .groups([1, 2])
                 .reversed
                 .join(' - ');
@@ -171,8 +171,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         bool isExam = event.containsKey('className') &&
                 event['className'] == 'est-epreuve' ||
             RegExp(r'^(?:.*?(?: - )){2}(.+?) - ')
-                    .firstMatch(event['title'])
-                    .group(1) ==
+                    .firstMatch(event['title'])!
+                    .group(1)! ==
                 "DEVOIRS SURVEILLES";
         events.add(
           FlutterWeekViewEvent(
@@ -218,7 +218,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => Navigator.of(context)!.pop(),
                       child: Text(
                         'Ok',
                         style: TextStyle(color: amber),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-final Color white = Color(0xFFEEEEEE);
-final Color gray = Color(0xFF393E46);
-final Color semiGray = Color(0xFF2e323d);
-final Color darkGray = Color(0xFF222831);
-final Color amber = Color(0xFFFF9810);
-final Color semiAmber = Color(0xFF755532);
-final Color semiRed = Color(0xFF844040);
+const Color white = Color(0xFFEEEEEE);
+const Color gray = Color(0xFF393E46);
+const Color semiGray = Color(0xFF2e323d);
+const Color darkGray = Color(0xFF222831);
+const Color amber = Color(0xFFD7861A);
+const Color semiAmber = Color(0xFF755532);
+const Color semiRed = Color(0xFF844040);
 
 final int weeksBehind = 3;
 final int weeksAhead = 5;
