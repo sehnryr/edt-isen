@@ -26,9 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _saving = false;
   bool _isLoggedIn = false;
   bool _hasSchedule = false;
-  bool _easterEgg1 = false;
-  bool error_username = false;
-  bool error_password = false;
+  bool errorUsername = false;
+  bool errorPassword = false;
   List<dynamic> schedule = [];
 
   @override
@@ -48,11 +47,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final String? rawSchedule = await SecureStorage.getSchedule();
 
-    if (rawSchedule != null)
+    if (rawSchedule != null) {
+      schedule = json.decode(rawSchedule);
+      name = await SecureStorage.getName() ?? "";
       setState(() {
-        schedule = json.decode(rawSchedule);
         _hasSchedule = true;
       });
+    }
 
     setState(() {
       _saving = false;
@@ -161,8 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (username.length < 6 || password.length < 6) {
       setState(() {
-        error_username = username.length < 6;
-        error_password = password.length < 6;
+        errorUsername = username.length < 6;
+        errorPassword = password.length < 6;
       });
       return;
     }
@@ -202,8 +203,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_creditentialVerification(r)) {
       setState(() {
         _saving = false;
-        error_username = true;
-        error_password = true;
+        errorUsername = true;
+        errorPassword = true;
       });
       return;
     } else {
@@ -216,8 +217,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() {
       _saving = false;
-      error_username = false;
-      error_password = false;
+      errorUsername = false;
+      errorPassword = false;
       _isLoggedIn = true;
     });
   }
@@ -244,14 +245,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         UsernameInput(
                           controller: this.usernameController,
-                          color: error_username
+                          color: errorUsername
                               ? Colors.red.withOpacity(0.7)
                               : white,
                         ),
                         SizedBox(height: 30.0),
                         PasswordInput(
                           controller: this.passwordController,
-                          color: error_password
+                          color: errorPassword
                               ? Colors.red.withOpacity(0.7)
                               : white,
                         ),
