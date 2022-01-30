@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'src/login.dart';
-import 'src/common.dart';
+import 'package:aurion/src/login.dart';
+import 'package:aurion/utils/common.dart';
 
 void main() => initializeDateFormatting().then((_) => runApp(MyApp()));
 
@@ -24,24 +24,24 @@ class _MyAppState extends State<MyApp> {
       },
       child: MaterialApp(
         theme: ThemeData(
-          primaryColor: darkGray,
-          accentColor: white,
+          primaryColor: Palette.darkGray,
+          accentColor: Palette.white,
           fontFamily: 'OpenSans',
           textTheme: TextTheme(
             headline1: TextStyle(
-              color: white,
+              color: Palette.white,
               fontSize: 30.0,
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
             ),
             headline6: TextStyle(
-              color: white,
+              color: Palette.white,
               fontSize: 16.0,
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
             ),
             bodyText1: TextStyle(
-              color: white,
+              color: Palette.white,
               fontSize: 16.0,
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.normal,

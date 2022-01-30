@@ -3,7 +3,7 @@ import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
-import 'common.dart';
+import 'package:aurion/utils/common.dart';
 
 class ScheduleScreen extends StatefulWidget {
   final List<dynamic> schedule;
@@ -63,7 +63,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          backgroundColor: gray,
+          backgroundColor: Palette.gray,
           content: Image.network(
             'https://cdn.discordapp.com/emojis/712065195270340649.png?v=1',
           ),
@@ -76,7 +76,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return CalendarWeek(
       height: 105,
       controller: _viewWeek,
-      backgroundColor: semiGray,
+      backgroundColor: Palette.semiGray,
       showMonth: true,
       minDate: today.subtract(Duration(days: weeksBehind * 7 + today.weekday)),
       maxDate: today.add(Duration(days: weeksAhead * 7 - today.weekday - 1)),
@@ -104,13 +104,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         'DECEMBRE',
       ],
       decorations: [],
-      weekendsStyle: TextStyle(color: amber),
-      dateStyle: TextStyle(color: white),
-      dayOfWeekStyle: TextStyle(color: white),
-      monthStyle: TextStyle(color: white),
-      pressedDateBackgroundColor: amber,
+      weekendsStyle: TextStyle(color: Palette.amber),
+      dateStyle: TextStyle(color: Palette.white),
+      dayOfWeekStyle: TextStyle(color: Palette.white),
+      monthStyle: TextStyle(color: Palette.white),
+      pressedDateBackgroundColor: Palette.amber,
       pressedDateStyle: TextStyle(
-        color: darkGray,
+        color: Palette.darkGray,
         fontWeight: FontWeight.bold,
       ),
       onDatePressed: (date) async {
@@ -178,7 +178,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           FlutterWeekViewEvent(
             title: title,
             description: description,
-            backgroundColor: !isExam ? semiAmber : semiRed,
+            backgroundColor: !isExam ? Palette.semiAmber : Palette.semiRed,
             start: reducedDate.add(
               Duration(
                 hours: _start[0],
@@ -196,7 +196,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               context: context,
               builder: (_) {
                 return AlertDialog(
-                  backgroundColor: gray,
+                  backgroundColor: Palette.gray,
                   title: Row(
                     children: <Widget>[
                       Text(title),
@@ -205,7 +205,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           ? Align(
                               alignment: Alignment.centerRight,
                               child: IconButton(
-                                icon: Icon(Icons.school, color: white),
+                                icon: Icon(Icons.school, color: Palette.white),
                                 onPressed: () => suicide(),
                               ),
                             )
@@ -214,14 +214,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ),
                   content: Text(
                     detailedDescription,
-                    style: TextStyle(color: white),
+                    style: TextStyle(color: Palette.white),
                   ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context)!.pop(),
                       child: Text(
                         'Ok',
-                        style: TextStyle(color: amber),
+                        style: TextStyle(color: Palette.amber),
                       ),
                     )
                   ],
@@ -250,10 +250,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         maximumTime: HourMinute(hour: _maximumHour),
         style: DayViewStyle(
           headerSize: 0,
-          backgroundColor: (now == reducedDate) ? amber.withOpacity(0.1) : gray,
-          backgroundRulesColor: white,
-          currentTimeRuleColor: amber,
-          currentTimeCircleColor: amber,
+          backgroundColor: (now == reducedDate)
+              ? Palette.amber.withOpacity(0.1)
+              : Palette.gray,
+          backgroundRulesColor: Palette.white,
+          currentTimeRuleColor: Palette.amber,
+          currentTimeCircleColor: Palette.amber,
           currentTimeRuleHeight: 3.0,
           hourRowHeight: _hourRowHeight,
         ),
@@ -276,8 +278,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         minimumTime: HourMinute(hour: 8),
         maximumTime: HourMinute(hour: 20),
         hoursColumnStyle: HoursColumnStyle(
-          textStyle: TextStyle(color: white),
-          color: semiGray,
+          textStyle: TextStyle(color: Palette.white),
+          color: Palette.semiGray,
           width: width, // default
         ),
         style: DayViewStyle(
@@ -291,13 +293,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: gray,
+      backgroundColor: Palette.gray,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => setState(() => _selectedIndex = index),
-        unselectedItemColor: white,
+        unselectedItemColor: Palette.white,
         currentIndex: _selectedIndex,
-        selectedItemColor: amber,
-        backgroundColor: darkGray,
+        selectedItemColor: Palette.amber,
+        backgroundColor: Palette.darkGray,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.date_range),

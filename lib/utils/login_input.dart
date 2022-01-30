@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../src/common.dart';
+import 'package:aurion/utils/common.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginInput extends StatelessWidget {
@@ -17,7 +17,7 @@ class LoginInput extends StatelessWidget {
       required this.prefixIcon,
       required this.hintText,
       this.isPassword = false,
-      this.color = white})
+      this.color = Palette.white})
       : super(key: key);
 
   @override
@@ -74,7 +74,7 @@ class _LoginTextFormFieldState extends State<LoginTextFormField> {
     return TextFormField(
       focusNode: this._focusNode,
       autofillHints: widget.autofillHints,
-      cursorColor: white,
+      cursorColor: Palette.white,
       controller: widget.controller,
       obscureText: widget.isPassword ? !this.showPassword : false,
       style: Theme.of(context).textTheme.bodyText1,
@@ -86,7 +86,7 @@ class _LoginTextFormFieldState extends State<LoginTextFormField> {
               ? GestureDetector(
                   child: Icon(
                     this.showPassword ? Icons.visibility : Icons.visibility_off,
-                    color: white.withOpacity(0.25),
+                    color: Palette.white.withOpacity(0.25),
                   ),
                   onTap: () {
                     this._focusNode.unfocus();
@@ -98,7 +98,7 @@ class _LoginTextFormFieldState extends State<LoginTextFormField> {
           hintText: widget.hintText,
           hintStyle: GoogleFonts.getFont(
             "Montserrat",
-            color: white.withOpacity(0.5),
+            color: Palette.white.withOpacity(0.5),
             fontWeight: FontWeight.w200,
           )),
     );
@@ -122,7 +122,7 @@ class UsernameInput extends StatelessWidget {
       autofillHints: [AutofillHints.username],
       prefixIcon: Icon(
         Icons.person,
-        color: white,
+        color: Palette.white,
       ),
       hintText: "Identifiant",
       color: this.color,
@@ -147,7 +147,7 @@ class PasswordInput extends StatelessWidget {
       autofillHints: [AutofillHints.password],
       prefixIcon: Icon(
         Icons.lock_open,
-        color: white,
+        color: Palette.white,
       ),
       hintText: "Mot de passe",
       isPassword: true,
@@ -175,12 +175,12 @@ class LoginButton extends StatelessWidget {
           "CONNEXION",
           style: GoogleFonts.getFont(
             "Reem Kufi",
-            color: white,
+            color: Palette.white,
             fontSize: 20,
           ),
         ),
         style: ElevatedButton.styleFrom(
-            primary: amber,
+            primary: Palette.amber,
             elevation: 5.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10))),

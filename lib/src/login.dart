@@ -7,10 +7,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'common.dart';
-import 'schedule.dart';
-import '../utils/login_input.dart';
-import '../utils/secure_storage.dart';
+
+import 'package:aurion/src/schedule.dart';
+import 'package:aurion/utils/common.dart';
+import 'package:aurion/utils/login_input.dart';
+import 'package:aurion/utils/secure_storage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -236,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   SvgPicture.asset(
                     "assets/images/logo_hat.svg",
-                    color: white,
+                    color: Palette.white,
                     width: 100,
                     height: 100,
                   ),
@@ -248,14 +249,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: this.usernameController,
                           color: errorUsername
                               ? Colors.red.withOpacity(0.7)
-                              : white,
+                              : Palette.white,
                         ),
                         SizedBox(height: 30.0),
                         PasswordInput(
                           controller: this.passwordController,
                           color: errorPassword
                               ? Colors.red.withOpacity(0.7)
-                              : white,
+                              : Palette.white,
                         ),
                       ],
                     ),
@@ -276,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
             "Cette application est à l'usage exclusif des étudiants de l'ISEN.",
             style: GoogleFonts.getFont(
               "Montserrat",
-              color: white.withOpacity(0.5),
+              color: Palette.white.withOpacity(0.5),
               fontWeight: FontWeight.w200,
               fontSize: 12,
             ),
@@ -284,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
           height: 60,
         ),
-        backgroundColor: gray,
+        backgroundColor: Palette.gray,
       ),
       inAsyncCall: _saving,
     );
@@ -295,19 +296,19 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(),
       // body: ScheduleScreen(schedule: schedule),
       body: RefreshIndicator(
-        backgroundColor: gray,
-        color: amber,
+        backgroundColor: Palette.gray,
+        color: Palette.amber,
         child: ScheduleScreen(schedule: schedule),
         onRefresh: _updateSchedule,
       ),
       endDrawer: Drawer(
         child: Container(
-          color: gray,
+          color: Palette.gray,
           child: ListView(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(15),
-                color: semiGray,
+                color: Palette.semiGray,
                 child: Text(
                   name,
                   style: Theme.of(context).textTheme.headline6,
@@ -318,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 child: RaisedButton(
                   onPressed: logoutUser,
-                  color: white,
+                  color: Palette.white,
                   padding: EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
@@ -326,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'DECONNEXION',
                     style: TextStyle(
-                      color: darkGray,
+                      color: Palette.darkGray,
                       letterSpacing: 1.5,
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

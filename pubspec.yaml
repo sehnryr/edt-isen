@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.1.2+8
 
 environment:
-    sdk: ">=2.12.0-29.10.beta <3.0.0"
+    sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
     flutter:
@@ -29,10 +29,10 @@ dependencies:
     cupertino_icons: ^1.0.0
 
     requests: ^3.3.0
-    cloud_firestore: ^0.14.4 # for Timestamp conversion
+    cloud_firestore: ^3.1.7 # for Timestamp conversion
     modal_progress_hud: ^0.1.3 # login verification
 
-    linked_scroll_controller: ^0.1.2 # for synced scroll
+    linked_scroll_controller: ^0.2.0 # for synced scroll
 
     flutter_week_view: ^1.0.0+1
     flutter_calendar_week:
@@ -40,11 +40,11 @@ dependencies:
             url: https://github.com/mduccc/flutter_calendar_week.git
             ref: 1.0.0
 
-    intl: ^0.16.1
+    intl: ^0.17.0
 
-    table_calendar: ^2.3.1
-    syncfusion_flutter_calendar: ^18.3.52
-    flutter_secure_storage: ^3.3.5
+    table_calendar: ^3.0.3
+    syncfusion_flutter_calendar: ^19.4.47
+    flutter_secure_storage: ^5.0.2
     google_fonts: ^1.1.2
     flutter_svg: ^0.19.3
     footer: ^0.0.3

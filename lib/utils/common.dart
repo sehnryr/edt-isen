@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-const Color white = Color(0xFFEEEEEE);
-const Color gray = Color(0xFF393E46);
-const Color semiGray = Color(0xFF2e323d);
-const Color darkGray = Color(0xFF222831);
-const Color amber = Color(0xFFD7861A);
-const Color semiAmber = Color(0xFF755532);
-const Color semiRed = Color(0xFF844040);
+class Palette {
+  static const Color white = Color(0xFFEEEEEE);
+  static const Color gray = Color(0xFF393E46);
+  static const Color semiGray = Color(0xFF2e323d);
+  static const Color darkGray = Color(0xFF222831);
+  static const Color amber = Color(0xFFD7861A);
+  static const Color semiAmber = Color(0xFF755532);
+  static const Color semiRed = Color(0xFF844040);
+}
 
 final int weeksBehind = 3;
 final int weeksAhead = 5;
