@@ -27,11 +27,11 @@ class LoginInput extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            border: Border.all(width: 2, color: this.color),
-            borderRadius: BorderRadius.circular(30),
+            border: Border.all(width: 1, color: this.color.withOpacity(0.4)),
+            borderRadius: BorderRadius.circular(10),
           ),
           height: 60.0,
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: LoginTextFormField(
             controller: this.controller,
             autofillHints: this.autofillHints,
@@ -67,10 +67,12 @@ class LoginTextFormField extends StatefulWidget {
 
 class _LoginTextFormFieldState extends State<LoginTextFormField> {
   late bool showPassword = false;
+  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: this._focusNode,
       autofillHints: widget.autofillHints,
       cursorColor: white,
       controller: widget.controller,
@@ -81,12 +83,14 @@ class _LoginTextFormFieldState extends State<LoginTextFormField> {
           border: InputBorder.none,
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.isPassword
-              ? IconButton(
-                  icon: Icon(
+              ? GestureDetector(
+                  child: Icon(
                     this.showPassword ? Icons.visibility : Icons.visibility_off,
                     color: white.withOpacity(0.25),
                   ),
-                  onPressed: () {
+                  onTap: () {
+                    this._focusNode.unfocus();
+                    this._focusNode.canRequestFocus = false;
                     setState(() => this.showPassword = !this.showPassword);
                   },
                 )
@@ -179,7 +183,7 @@ class LoginButton extends StatelessWidget {
             primary: amber,
             elevation: 5.0,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0))),
+                borderRadius: BorderRadius.circular(10))),
       ),
     );
   }
