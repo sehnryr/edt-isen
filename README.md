@@ -28,10 +28,3 @@ Les suggestions sont les bienvenues, non seulement pour les demandes de fonction
 Les données (identifiant & mot de passe) ne sont conservés qu'en local.
 
 Aucune donnée ne sera envoyée autre part que sur le site de [**l'ISEN**](https://web.isen-ouest.fr/).
-
-## TODO
-
-- [x] Swipe inter-jours
-- [ ] Planning des groupes
-- [ ] Notification des cours
-- [ ] Options pour parametrer l'apparence de l'application (premier jour de la semaine...)
